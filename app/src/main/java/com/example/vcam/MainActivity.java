@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
     private Switch play_sound_switch;
     private Switch force_private_dir;
     private Switch disable_toast_switch;
+    private Switch disable_video_toast_switch;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -61,6 +62,7 @@ public class MainActivity extends Activity {
         play_sound_switch = findViewById(R.id.switch3);
         force_private_dir = findViewById(R.id.switch4);
         disable_toast_switch = findViewById(R.id.switch5);
+        disable_video_toast_switch = findViewById(R.id.switch6);
 
 
 
@@ -194,6 +196,28 @@ public class MainActivity extends Activity {
             }
         });
 
+        disable_video_toast_switch.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (compoundButton.isPressed()) {
+                if (!has_permission()) {
+                    request_permission();
+                } else {
+                    File disable_toast_file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/no_video.jpg");
+                    if (disable_toast_file.exists() != b){
+                        if (b){
+                            try {
+                                disable_toast_file.createNewFile();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }else {
+                            disable_toast_file.delete();
+                        }
+                    }
+                }
+                sync_statue_with_files();
+            }
+        });
+
     }
 
     private void request_permission() {
@@ -247,6 +271,9 @@ public class MainActivity extends Activity {
 
         File disable_toast_file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/no_toast.jpg");
         disable_toast_switch.setChecked(disable_toast_file.exists());
+
+        File disable_video_toast_file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera1/no_video.jpg");
+        disable_video_toast_switch.setChecked(disable_video_toast_file.exists());
 
     }
 
