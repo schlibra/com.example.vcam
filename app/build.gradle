@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.vcam"
         minSdk 21
-        targetSdk 26
+        targetSdk 33
         versionCode 28
         versionName "4.4"
 
@@ -25,6 +25,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    namespace 'com.example.vcam'
 }
 
 dependencies {
